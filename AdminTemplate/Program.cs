@@ -4,7 +4,6 @@ using AdminTemplate.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 
-
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container
@@ -20,13 +19,22 @@ builder.Services.AddScoped<IInventoryRepository, InventoryRepository>();
 builder.Services.AddScoped<ISupplierRepository, SupplierRepository>();
 builder.Services.AddScoped<IInventoryCategoryRepository, InventoryCategoryRepository>();
 
+// QUEUE SERVICES (Singleton for background processing)
+builder.Services.AddSingleton<SupplierQueueService>();
+builder.Services.AddSingleton<ISupplierQueueService>(sp =>
+    sp.GetRequiredService<SupplierQueueService>());
+builder.Services.AddHostedService(sp =>
+    sp.GetRequiredService<SupplierQueueService>());
+
+// MESSAGE QUEUE SERVICES
+builder.Services.AddSingleton<IMessageQueueService, RabbitMQService>();
+builder.Services.AddHostedService<RabbitMQConsumerService>();
+
 // APPLICATION SERVICES
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IInventoryService, InventoryService>();
 builder.Services.AddScoped<ISupplierService, SupplierService>();
 builder.Services.AddScoped<IInventoryCategoryService, InventoryCategoryService>();
-
-
 
 // Authentication
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
@@ -57,6 +65,5 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
-
 
 app.Run();
