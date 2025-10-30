@@ -1,0 +1,101 @@
+﻿@{
+    ViewData["Title"] = "Inventory Monitoring Jobs";
+    Layout = null;
+}
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Inventory Monitoring Jobs</h2>
+
+            @if (TempData["SuccessMessage"] != null)
+            {
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    @TempData["SuccessMessage"]
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            }
+
+            @if (TempData["ErrorMessage"] != null)
+            {
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    @TempData["ErrorMessage"]
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            }
+
+            <div class="card mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Manual Actions</h5>
+                </div>
+                <div class="card-body">
+                    <form asp-action="TriggerInventoryCheck" method="post" class="d-inline">
+                        <button type="submit" class="btn btn-warning">
+                            <i class="fas fa-play"></i> Run Inventory Check Now
+                        </button>
+                    </form>
+
+                    <a href="/hangfire" target="_blank" class="btn btn-info ms-2">
+                        <i class="fas fa-chart-line"></i> View Hangfire Dashboard
+                    </a>
+                </div>
+            </div>
+
+            <div class="card mb-4">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0">Recurring Job Management</h5>
+                </div>
+                <div class="card-body">
+                    <form asp-action="UpdateSchedule" method="post">
+                        <div class="mb-3">
+                            <label for="cronExpression" class="form-label">Schedule (Cron Expression)</label>
+                            <select name="cronExpression" id="cronExpression" class="form-select">
+                                <option value="*/30 * * * *">Every 30 minutes</option>
+                                <option value="0 * * * *">Every hour</option>
+                                <option value="0 */2 * * *">Every 2 hours</option>
+                                <option value="0 */6 * * *">Every 6 hours</option>
+                                <option value="0 9 * * *">Daily at 9:00 AM</option>
+                                <option value="0 9,15 * * *">Twice daily (9 AM & 3 PM)</option>
+                            </select>
+                            <small class="form-text text-muted">
+                                Current schedule: Every 30 minutes (check Hangfire dashboard for actual)
+                            </small>
+                        </div>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-sync"></i> Update Schedule
+                        </button>
+                    </form>
+
+                    <hr class="my-3" />
+
+                    <form asp-action="PauseJob" method="post" class="d-inline">
+                        <button type="submit" class="btn btn-warning">
+                            <i class="fas fa-pause"></i> Pause Job
+                        </button>
+                    </form>
+
+                    <form asp-action="ResumeJob" method="post" class="d-inline">
+                        <button type="submit" class="btn btn-success ms-2">
+                            <i class="fas fa-play"></i> Resume Job
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header bg-info text-white">
+                    <h5 class="mb-0">How It Works</h5>
+                </div>
+                <div class="card-body">
+                    <ul>
+                        <li><strong>Automatic Monitoring:</strong> Hangfire checks inventory levels every 30 minutes (configurable)</li>
+                        <li><strong>Low Stock Alert (Quantity = 5):</strong> Sends a warning email to all verified users</li>
+                        <li><strong>Out of Stock Alert (Quantity = 0):</strong> Sends an urgent email to all verified users</li>
+                        <li><strong>Email Recipients:</strong> Only users with verified email addresses receive notifications</li>
+                        <li><strong>Dashboard:</strong> View job history, failures, and statistics in the Hangfire dashboard</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

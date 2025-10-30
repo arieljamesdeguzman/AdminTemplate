@@ -1,8 +1,11 @@
 ﻿using AdminTemplate.Data;
 using AdminTemplate.Repositories;
 using AdminTemplate.Services;
+using AdminTemplate.Filters;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
+using Hangfire;
+using Hangfire.SqlServer;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -36,6 +39,30 @@ builder.Services.AddScoped<IInventoryService, InventoryService>();
 builder.Services.AddScoped<ISupplierService, SupplierService>();
 builder.Services.AddScoped<IInventoryCategoryService, InventoryCategoryService>();
 
+// ✅ EMAIL SERVICE (REQUIRED FOR HANGFIRE NOTIFICATIONS)
+builder.Services.AddScoped<IEmailService, EmailService>();
+
+// HANGFIRE BACKGROUND JOB SERVICES
+builder.Services.AddScoped<IInventoryMonitoringService, InventoryMonitoringService>();
+
+// Configure Hangfire
+builder.Services.AddHangfire(configuration => configuration
+    .SetDataCompatibilityLevel(CompatibilityLevel.Version_180)
+    .UseSimpleAssemblyNameTypeSerializer()
+    .UseRecommendedSerializerSettings()
+    .UseSqlServerStorage(builder.Configuration.GetConnectionString("DefaultConnection"),
+        new SqlServerStorageOptions
+        {
+            CommandBatchMaxTimeout = TimeSpan.FromMinutes(5),
+            SlidingInvisibilityTimeout = TimeSpan.FromMinutes(5),
+            QueuePollInterval = TimeSpan.Zero,
+            UseRecommendedIsolationLevel = true,
+            DisableGlobalLocks = true
+        }));
+
+// Add Hangfire server
+builder.Services.AddHangfireServer();
+
 // Authentication
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
@@ -62,8 +89,26 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
+// Hangfire Dashboard (must be after UseAuthorization)
+app.UseHangfireDashboard("/hangfire", new DashboardOptions
+{
+    Authorization = new[] { new HangfireAuthorizationFilter() }
+});
+
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+// Initialize recurring jobs on startup
+using (var scope = app.Services.CreateScope())
+{
+    var recurringJobManager = scope.ServiceProvider.GetRequiredService<IRecurringJobManager>();
+
+    // Check inventory levels every 30 minutes
+    recurringJobManager.AddOrUpdate<IInventoryMonitoringService>(
+        "check-inventory-levels",
+        service => service.CheckInventoryLevelsAsync(),
+        "*/30 * * * *");
+}
 
 app.Run();
