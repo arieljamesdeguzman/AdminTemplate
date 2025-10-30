@@ -1,9 +1,9 @@
-﻿using AdminTemplate.Models;
+﻿using AdminTemplate.DTOs;
+using AdminTemplate.Models;
 using AdminTemplate.Repositories;
-using AdminTemplate.Services;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using AdminTemplate.DTOs;
 
 namespace AdminTemplate.Services
 {
@@ -16,11 +16,15 @@ namespace AdminTemplate.Services
             _inventoryRepository = inventoryRepository;
         }
 
-        public async Task<IEnumerable<Inventory>> GetAllAsync() =>
-            await _inventoryRepository.GetAllAsync();
+        public async Task<IEnumerable<Inventory>> GetAllAsync()
+        {
+            return await _inventoryRepository.GetAllAsync();
+        }
 
-        public async Task<Inventory> GetByIdAsync(int id) =>
-            await _inventoryRepository.GetByIdAsync(id);
+        public async Task<Inventory> GetByIdAsync(int id)
+        {
+            return await _inventoryRepository.GetByIdAsync(id);
+        }
 
         public async Task AddAsync(InventoryDto dto)
         {
@@ -36,16 +40,20 @@ namespace AdminTemplate.Services
                 SellingPrice = dto.SellingPrice,
                 Location = dto.Location,
                 ExpiryDate = dto.ExpiryDate,
-                Status = dto.Status
+                Status = dto.Status ?? "active",
+                DateAdded = DateTime.UtcNow,
+                LastUpdated = DateTime.UtcNow
             };
+
             await _inventoryRepository.AddAsync(item);
             await _inventoryRepository.SaveChangesAsync();
         }
 
-        public async Task UpdateAsync(InventoryDto dto)
+        public async Task<bool> UpdateAsync(InventoryDto dto)
         {
             var existing = await _inventoryRepository.GetByIdAsync(dto.Id);
-            if (existing == null) return;
+            if (existing == null)
+                return false;
 
             existing.ItemName = dto.ItemName;
             existing.CategoryId = dto.CategoryId;
@@ -58,15 +66,24 @@ namespace AdminTemplate.Services
             existing.Location = dto.Location;
             existing.ExpiryDate = dto.ExpiryDate;
             existing.Status = dto.Status;
+            existing.LastUpdated = DateTime.UtcNow;
 
             await _inventoryRepository.UpdateAsync(existing);
             await _inventoryRepository.SaveChangesAsync();
+
+            return true;
         }
 
-        public async Task DeleteAsync(int id)
+        public async Task<bool> DeleteAsync(int id)
         {
+            var item = await _inventoryRepository.GetByIdAsync(id);
+            if (item == null)
+                return false;
+
             await _inventoryRepository.DeleteAsync(id);
             await _inventoryRepository.SaveChangesAsync();
+
+            return true;
         }
     }
 }
