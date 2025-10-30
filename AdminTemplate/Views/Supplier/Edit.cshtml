@@ -1,0 +1,51 @@
+﻿@model AdminTemplate.DTOs.SupplierDto
+
+@{
+    ViewData["Title"] = "Edit Supplier";
+}
+
+<main id="main-content">
+    <div class="content-wrapper">
+        <div class="row">
+            <div class="col-md-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <h2>Edit Supplier</h2>
+
+                        <form asp-action="Edit" method="post">
+                            <input type="hidden" asp-for="Id" />
+                            @Html.AntiForgeryToken()
+
+                            <div class="mb-3">
+                                <label asp-for="SupplierName" class="form-label">Name</label>
+                                <input asp-for="SupplierName" class="form-control" />
+                                <span asp-validation-for="SupplierName" class="text-danger"></span>
+                            </div>
+
+                            <div class="mb-3">
+                                <label asp-for="ContactNumber" class="form-label">Contact</label>
+                                <input asp-for="ContactNumber" class="form-control" />
+                                <span asp-validation-for="ContactNumber" class="text-danger"></span>
+                            </div>
+
+                            <div class="mb-3">
+                                <label asp-for="Email" class="form-label">Email</label>
+                                <input asp-for="Email" type="email" class="form-control" />
+                                <span asp-validation-for="Email" class="text-danger"></span>
+                            </div>
+
+                            <div class="mb-3">
+                                <label asp-for="Address" class="form-label">Address</label>
+                                <textarea asp-for="Address" class="form-control" rows="3"></textarea>
+                                <span asp-validation-for="Address" class="text-danger"></span>
+                            </div>
+
+                            <button type="submit" class="btn btn-success">Update</button>
+                            <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>

@@ -1,0 +1,45 @@
+﻿@model IEnumerable<AdminTemplate.Models.Supplier>
+
+<main id="main-content">
+    <div class="content-wrapper">
+
+        <div class="row">
+            <div class="col-md-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body text-white">
+                    <h2>Suppliers</h2>
+                    <a href="/Supplier/Create" class="btn btn-primary mb-3">Add Supplier</a>
+
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Contact</th>
+                                <th>Email</th>
+                                <th>Address</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var s in Model)
+                            {
+                                <tr>
+                                    <td>@s.SupplierName</td>
+                                    <td>@s.ContactNumber</td>
+                                    <td>@s.Email</td>
+                                    <td>@s.Address</td>
+                                    <td>
+                                        <a href="/Supplier/Edit/@s.Id" class="btn btn-sm btn-warning">Edit</a>
+                                        <a href="/Supplier/Details/@s.Id" class="btn btn-sm btn-info">Details</a>
+                                        <a href="/Supplier/Delete/@s.Id" class="btn btn-sm btn-danger">Delete</a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
