@@ -1,29 +1,80 @@
-﻿@model AdminTemplate.Models.InventoryCategory
-
+﻿@model AdminTemplate.DTOs.InventoryCategoryDto
 <main id="main-content">
     <div class="content-wrapper">
-
         <div class="row">
             <div class="col-md-12 grid-margin stretch-card">
                 <div class="card">
                     <div class="card-body">
-                    <h2>Edit Category</h2>
-                    <hr />
+                        <h2>Edit Category</h2>
+                        <hr />
+                        <form asp-action="Edit" method="post" enctype="multipart/form-data">
+                            <input type="hidden" asp-for="Id" />
+                            <input type="hidden" asp-for="ImageUrl" id="existingImageUrl" />
 
-                    <form asp-action="Edit" method="post">
-                        <input type="hidden" asp-for="Id" />
-                        <div class="mb-3">
-                            <label class="form-label">Category Name</label>
-                            <input asp-for="Name" class="form-control" required />
-                            <span asp-validation-for="Name" class="text-danger"></span>
-                        </div>
+                            <div class="mb-3">
+                                <label class="form-label">Category Name</label>
+                                <input asp-for="Name" class="form-control" required />
+                                <span asp-validation-for="Name" class="text-danger"></span>
+                            </div>
 
-                        <button type="submit" class="btn btn-success">Update</button>
-                        <a href="/InventoryCategory" class="btn btn-secondary">Cancel</a>
-                    </form>
+                            <div class="mb-3">
+                                <label class="form-label">Current Image</label>
+                                @if (!string.IsNullOrEmpty(Model.ImageUrl))
+                                {
+                                    <div class="border rounded p-2 mb-2" style="max-width: 300px;" id="currentImageContainer">
+                                        <img src="@Model.ImageUrl" alt="Current Image" style="max-width: 100%; height: auto; display: block;" />
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="alert alert-info" id="currentImageContainer">
+                                        <i class="mdi mdi-information"></i> No image uploaded yet.
+                                    </div>
+                                }
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Upload New Image (Optional)</label>
+                                <input type="file" asp-for="ImageFile" class="form-control" accept="image/*" id="imageInput" onchange="previewImage(event)" />
+                                <span asp-validation-for="ImageFile" class="text-danger"></span>
+                                <small class="form-text text-muted">Leave empty to keep current image. Accepted formats: JPG, PNG, GIF (Max 5MB)</small>
+                            </div>
+
+                            <div class="mb-3" id="imagePreviewContainer" style="display: none;">
+                                <label class="form-label">New Image Preview</label>
+                                <div class="border rounded p-2" style="max-width: 300px;">
+                                    <img id="imagePreview" src="" alt="Preview" style="max-width: 100%; height: auto; display: block;" />
+                                </div>
+                            </div>
+
+                            <button type="submit" class="btn btn-success">Update</button>
+                            <a href="/InventoryCategory" class="btn btn-secondary">Cancel</a>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </main>
+
+@section Scripts {
+    <script>
+        function previewImage(event) {
+            const file = event.target.files[0];
+            const preview = document.getElementById('imagePreview');
+            const previewContainer = document.getElementById('imagePreviewContainer');
+
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    preview.src = e.target.result;
+                    previewContainer.style.display = 'block';
+                }
+                reader.readAsDataURL(file);
+            } else {
+                preview.src = '';
+                previewContainer.style.display = 'none';
+            }
+        }
+    </script>
+}

@@ -1,8 +1,6 @@
 ﻿@model IEnumerable<AdminTemplate.Models.InventoryCategory>
-
 <main id="main-content">
     <div class="content-wrapper">
-
         <div class="row">
             <div class="col-md-12 grid-margin stretch-card">
                 <div class="card">
@@ -11,11 +9,11 @@
                             <h2>Inventory Categories</h2>
                             <a href="/InventoryCategory/Create" class="btn btn-primary">+ Add Category</a>
                         </div>
-
                         <table class="table table-bordered table-striped">
                             <thead class="table-dark">
                                 <tr>
                                     <th>ID</th>
+                                    <th>Image</th>
                                     <th>Category Name</th>
                                     <th style="width: 200px;">Actions</th>
                                 </tr>
@@ -27,6 +25,18 @@
                                     {
                                         <tr>
                                             <td>@item.Id</td>
+                                            <td>
+                                                @if (!string.IsNullOrEmpty(item.ImageUrl))
+                                                {
+                                                    <img src="@item.ImageUrl" alt="@item.Name" style="width: 60px; height: 60px; object-fit: cover; border-radius: 4px;" />
+                                                }
+                                                else
+                                                {
+                                                    <div style="width: 60px; height: 60px; background-color: #e9ecef; display: flex; align-items: center; justify-content: center; border-radius: 4px;">
+                                                        <i class="mdi mdi-image" style="font-size: 24px; color: #6c757d;"></i>
+                                                    </div>
+                                                }
+                                            </td>
                                             <td>@item.Name</td>
                                             <td>
                                                 <a href="/InventoryCategory/Edit/@item.Id" class="btn btn-sm btn-warning">Edit</a>
@@ -38,7 +48,7 @@
                                 }
                                 else
                                 {
-                                    <tr><td colspan="3" class="text-center">No categories found.</td></tr>
+                                    <tr><td colspan="4" class="text-center">No categories found.</td></tr>
                                 }
                             </tbody>
                         </table>

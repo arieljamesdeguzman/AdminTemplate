@@ -38,6 +38,7 @@ builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IInventoryService, InventoryService>();
 builder.Services.AddScoped<ISupplierService, SupplierService>();
 builder.Services.AddScoped<IInventoryCategoryService, InventoryCategoryService>();
+builder.Services.AddScoped<IFileService, FileService>();
 
 // ✅ EMAIL SERVICE (REQUIRED FOR HANGFIRE NOTIFICATIONS)
 builder.Services.AddScoped<IEmailService, EmailService>();

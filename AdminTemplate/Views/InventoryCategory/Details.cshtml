@@ -1,24 +1,42 @@
 ﻿@model AdminTemplate.Models.InventoryCategory
-
 <main id="main-content">
     <div class="content-wrapper">
-
         <div class="row">
             <div class="col-md-12 grid-margin stretch-card">
                 <div class="card">
                     <div class="card-body">
-                    <h2>Category Details</h2>
-                    <hr />
-
-                    <div class="mb-3">
-                        <strong>ID:</strong> @Model.Id
-                    </div>
-                    <div class="mb-3">
-                        <strong>Name:</strong> @Model.Name
-                    </div>
-
-                    <a href="/InventoryCategory/Edit/@Model.Id" class="btn btn-warning">Edit</a>
-                    <a href="/InventoryCategory" class="btn btn-secondary">Back</a>
+                        <h2>Category Details</h2>
+                        <hr />
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <strong>ID:</strong> @Model.Id
+                                </div>
+                                <div class="mb-3">
+                                    <strong>Name:</strong> @Model.Name
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <strong>Category Image:</strong>
+                                    <div class="mt-2">
+                                        @if (!string.IsNullOrEmpty(Model.ImageUrl))
+                                        {
+                                            <img src="@Model.ImageUrl" alt="@Model.Name" class="img-fluid border rounded" style="max-width: 300px; height: auto;" />
+                                        }
+                                        else
+                                        {
+                                            <div class="alert alert-info">
+                                                <i class="mdi mdi-information"></i> No image available.
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <hr />
+                        <a href="/InventoryCategory/Edit/@Model.Id" class="btn btn-warning">Edit</a>
+                        <a href="/InventoryCategory" class="btn btn-secondary">Back</a>
                     </div>
                 </div>
             </div>

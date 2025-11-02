@@ -7,9 +7,9 @@ namespace AdminTemplate.Models
     {
         public int Id { get; set; }
 
-        [Required]
-        [MaxLength(100)]
+
         public string Name { get; set; }
+        public string ImageUrl { get; set; }
 
         // Navigation
         public ICollection<Inventory> Inventories { get; set; }

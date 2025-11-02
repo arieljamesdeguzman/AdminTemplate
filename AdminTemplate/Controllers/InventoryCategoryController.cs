@@ -8,6 +8,7 @@ namespace AdminTemplate.Controllers
     public class InventoryCategoryController : Controller
     {
         private readonly IInventoryCategoryService _service;
+
         public InventoryCategoryController(IInventoryCategoryService service)
         {
             _service = service;
@@ -25,9 +26,26 @@ namespace AdminTemplate.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(InventoryCategoryDto dto)
         {
-            if (!ModelState.IsValid) return View(dto);
-            await _service.AddAsync(dto);
-            return RedirectToAction(nameof(Index));
+            // Remove ImageFile from validation since it's optional
+            ModelState.Remove("ImageFile");
+
+            if (!ModelState.IsValid)
+            {
+                TempData["ErrorMessage"] = "Please correct the errors and try again.";
+                return View(dto);
+            }
+
+            try
+            {
+                await _service.AddAsync(dto);
+                TempData["SuccessMessage"] = "Category created successfully.";
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = $"Error: {ex.Message}";
+                return View(dto);
+            }
         }
 
         [HttpGet]
@@ -35,14 +53,24 @@ namespace AdminTemplate.Controllers
         {
             var category = await _service.GetByIdAsync(id);
             if (category == null) return NotFound();
-            return View(category);
+
+            var dto = new InventoryCategoryDto
+            {
+                Id = category.Id,
+                Name = category.Name,
+                ImageUrl = category.ImageUrl
+            };
+
+            return View(dto);
         }
 
         [HttpPost]
         public async Task<IActionResult> Edit(InventoryCategoryDto dto)
         {
             if (!ModelState.IsValid) return View(dto);
+
             await _service.UpdateAsync(dto);
+            TempData["SuccessMessage"] = "Category updated successfully.";
             return RedirectToAction(nameof(Index));
         }
 
@@ -53,7 +81,6 @@ namespace AdminTemplate.Controllers
             return View(category);
         }
 
-        // Delete (GET)
         [HttpGet]
         public async Task<IActionResult> Delete(int id)
         {
@@ -66,7 +93,6 @@ namespace AdminTemplate.Controllers
             return View(category);
         }
 
-        // Delete (POST)
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

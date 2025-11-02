@@ -33,24 +33,28 @@ namespace AdminTemplate.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
+            //var supplier = await _service.GetByIdAsync(id);
+            //if (supplier == null)
+            //{
+            //    TempData["ErrorMessage"] = "Supplier not found.";
+            //    return RedirectToAction(nameof(Index));
+            //}
+
+            //// Map entity to DTO
+            //var dto = new SupplierDto
+            //{
+            //    Id = supplier.Id,
+            //    SupplierName = supplier.SupplierName,
+            //    ContactNumber = supplier.ContactNumber,
+            //    Email = supplier.Email,
+            //    Address = supplier.Address
+            //};
+
+            //return View(dto);
+
             var supplier = await _service.GetByIdAsync(id);
-            if (supplier == null)
-            {
-                TempData["ErrorMessage"] = "Supplier not found.";
-                return RedirectToAction(nameof(Index));
-            }
-
-            // Map entity to DTO
-            var dto = new SupplierDto
-            {
-                Id = supplier.Id,
-                SupplierName = supplier.SupplierName,
-                ContactNumber = supplier.ContactNumber,
-                Email = supplier.Email,
-                Address = supplier.Address
-            };
-
-            return View(dto);
+            if (supplier == null) return NotFound();
+            return View(supplier);
         }
 
         [HttpPost]
