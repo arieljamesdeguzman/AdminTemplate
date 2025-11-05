@@ -4,110 +4,289 @@
     ViewData["Title"] = "Create Inventory";
 }
 
-<main id="main-content">
-    <div class="content-wrapper">
+<div class="content-wrapper">
+    <div class="row">
+        <div class="col-md-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Add New Inventory Item</h4>
 
-        <div class="row">
-            <div class="col-md-12 grid-margin stretch-card">
-                <div class="card">
-                    <div class="card-body">
-                        <h2>Add New Inventory Item</h2>
+                    <!-- Validation summary -->
+                    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
 
-                        @* Display validation messages *@
-                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <form asp-action="Create" method="post" class="forms-sample">
+                        <div class="row">
+                            <!-- Left Column -->
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label asp-for="Inventory.ItemName" class="col-form-label"></label>
+                                    <input asp-for="Inventory.ItemName" class="form-control" />
+                                    <span asp-validation-for="Inventory.ItemName" class="text-danger"></span>
+                                </div>
 
-                        <form asp-action="Create" method="post">
-                            <div class="mb-3">
-                                <label asp-for="Inventory.ItemName" class="form-label"></label>
-                                <input asp-for="Inventory.ItemName" class="form-control" />
-                                <span asp-validation-for="Inventory.ItemName" class="text-danger"></span>
+                                <div class="form-group">
+                                    <label asp-for="Inventory.CategoryId" class="col-form-label"></label>
+                                    <select asp-for="Inventory.CategoryId" class="form-control"
+                                            asp-items="@(new SelectList(Model.Categories, "Id", "Name"))">
+                                        <option value="">-- Select Category --</option>
+                                    </select>
+                                    <span asp-validation-for="Inventory.CategoryId" class="text-danger"></span>
+                                </div>
+
+                                <div class="form-group">
+                                    <label asp-for="Inventory.SupplierId" class="col-form-label"></label>
+                                    <select asp-for="Inventory.SupplierId" class="form-control"
+                                            asp-items="@(new SelectList(Model.Suppliers, "Id", "SupplierName"))">
+                                        <option value="">-- Select Supplier --</option>
+                                    </select>
+                                    <span asp-validation-for="Inventory.SupplierId" class="text-danger"></span>
+                                </div>
+
+                                <div class="form-group">
+                                    <label asp-for="Inventory.Unit" class="col-form-label"></label>
+                                    <input asp-for="Inventory.Unit" class="form-control" />
+                                    <span asp-validation-for="Inventory.Unit" class="text-danger"></span>
+                                </div>
+
+                                <div class="form-group">
+                                    <label asp-for="Inventory.CurrentQuantity" class="col-form-label"></label>
+                                    <input asp-for="Inventory.CurrentQuantity" type="number" step="0.01" class="form-control" />
+                                    <span asp-validation-for="Inventory.CurrentQuantity" class="text-danger"></span>
+                                </div>
                             </div>
 
-                            <div class="mb-3">
-                                <label asp-for="Inventory.CategoryId" class="form-label"></label>
-                                <select asp-for="Inventory.CategoryId"
-                                        class="form-control text-white"
-                                        asp-items="@(new SelectList(Model.Categories, "Id", "Name"))">
-                                    <option value="" class="text-white">-- Select Category --</option>
-                                </select>
-                                <span asp-validation-for="Inventory.CategoryId" class="text-danger"></span>
-                            </div>
+                            <!-- Right Column -->
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label asp-for="Inventory.ReorderLevel" class="col-form-label"></label>
+                                    <input asp-for="Inventory.ReorderLevel" type="number" step="0.01" class="form-control" />
+                                    <span asp-validation-for="Inventory.ReorderLevel" class="text-danger"></span>
+                                </div>
 
-                            <div class="mb-3">
-                                <label asp-for="Inventory.SupplierId" class="form-label"></label>
-                                <select asp-for="Inventory.SupplierId"
-                                        class="form-control text-white"
-                                        asp-items="@(new SelectList(Model.Suppliers, "Id", "SupplierName"))">
-                                    <option value="" class="text-white">-- Select Supplier --</option>
-                                </select>
-                                <span asp-validation-for="Inventory.SupplierId" class="text-danger"></span>
-                            </div>
+                                <div class="form-group">
+                                    <label asp-for="Inventory.CostPerUnit" class="col-form-label"></label>
+                                    <input asp-for="Inventory.CostPerUnit" type="number" step="0.01" class="form-control" />
+                                    <span asp-validation-for="Inventory.CostPerUnit" class="text-danger"></span>
+                                </div>
 
-                            <div class="mb-3">
-                                <label asp-for="Inventory.Unit" class="form-label"></label>
-                                <input asp-for="Inventory.Unit" class="form-control" />
-                                <span asp-validation-for="Inventory.Unit" class="text-danger"></span>
-                            </div>
+                                <div class="form-group">
+                                    <label asp-for="Inventory.SellingPrice" class="col-form-label"></label>
+                                    <input asp-for="Inventory.SellingPrice" type="number" step="0.01" class="form-control" />
+                                    <span asp-validation-for="Inventory.SellingPrice" class="text-danger"></span>
+                                </div>
 
-                            <div class="mb-3">
-                                <label asp-for="Inventory.CurrentQuantity" class="form-label"></label>
-                                <input asp-for="Inventory.CurrentQuantity" type="number" step="0.01" class="form-control" />
-                                <span asp-validation-for="Inventory.CurrentQuantity" class="text-danger"></span>
-                            </div>
+                                <div class="form-group">
+                                    <label asp-for="Inventory.Location" class="col-form-label"></label>
+                                    <input asp-for="Inventory.Location" class="form-control" />
+                                    <span asp-validation-for="Inventory.Location" class="text-danger"></span>
+                                </div>
 
-                            <div class="mb-3">
-                                <label asp-for="Inventory.ReorderLevel" class="form-label"></label>
-                                <input asp-for="Inventory.ReorderLevel" type="number" step="0.01" class="form-control" />
-                                <span asp-validation-for="Inventory.ReorderLevel" class="text-danger"></span>
-                            </div>
+                                <div class="form-group">
+                                    <label asp-for="Inventory.ExpiryDate" class="col-form-label"></label>
+                                    <input asp-for="Inventory.ExpiryDate" type="date" class="form-control" />
+                                    <span asp-validation-for="Inventory.ExpiryDate" class="text-danger"></span>
+                                </div>
 
-                            <div class="mb-3">
-                                <label asp-for="Inventory.CostPerUnit" class="form-label"></label>
-                                <input asp-for="Inventory.CostPerUnit" type="number" step="0.01" class="form-control" />
-                                <span asp-validation-for="Inventory.CostPerUnit" class="text-danger"></span>
+                                <div class="form-group">
+                                    <label asp-for="Inventory.Status" class="col-form-label"></label>
+                                    <select asp-for="Inventory.Status" class="form-control">
+                                        <option value="active">Active</option>
+                                        <option value="inactive">Inactive</option>
+                                        <option value="expired">Expired</option>
+                                        <option value="out_of_stock">Out of Stock</option>
+                                    </select>
+                                    <span asp-validation-for="Inventory.Status" class="text-danger"></span>
+                                </div>
                             </div>
+                        </div>
 
-                            <div class="mb-3">
-                                <label asp-for="Inventory.SellingPrice" class="form-label"></label>
-                                <input asp-for="Inventory.SellingPrice" type="number" step="0.01" class="form-control" />
-                                <span asp-validation-for="Inventory.SellingPrice" class="text-danger"></span>
-                            </div>
+                        <div class="mt-4">
+                            <button type="submit" class="btn btn-primary mr-2">SAVE</button>
+                            <a asp-action="Index" class="btn btn-light">CANCEL</a>
+                        </div>
+                    </form>
 
-                            <div class="mb-3">
-                                <label asp-for="Inventory.Location" class="form-label"></label>
-                                <input asp-for="Inventory.Location" class="form-control" />
-                                <span asp-validation-for="Inventory.Location" class="text-danger"></span>
-                            </div>
-
-                            <div class="mb-3">
-                                <label asp-for="Inventory.ExpiryDate" class="form-label"></label>
-                                <input asp-for="Inventory.ExpiryDate" type="date" class="form-control" />
-                                <span asp-validation-for="Inventory.ExpiryDate" class="text-danger"></span>
-                            </div>
-
-                            <div class="mb-3">
-                                <label asp-for="Inventory.Status" class="form-label"></label>
-                                <select asp-for="Inventory.Status" class="form-control">
-                                    <option value="active">Active</option>
-                                    <option value="inactive">Inactive</option>
-                                    <option value="expired">Expired</option>
-                                    <option value="out_of_stock">Out of Stock</option>
-                                </select>
-                                <span asp-validation-for="Inventory.Status" class="text-danger"></span>
-                            </div>
-
-                            <button type="submit" class="btn btn-primary">Save</button>
-                            <a asp-action="Index" class="btn btn-secondary">Cancel</a>
-                        </form>
-                    </div>
                 </div>
             </div>
         </div>
     </div>
-</main>
+</div>
 
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
 }
+
+<style>
+    /* ===========================
+           CORONA TEMPLATE ENHANCEMENTS
+           =========================== */
+
+    /* Ensure consistent dark theme */
+    .content-wrapper {
+        background-color: #191c24;
+    }
+
+    .card {
+        background-color: #262b33;
+        border: none;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    }
+
+    .card-title {
+        color: #c8cdd8;
+        font-weight: 400;
+        font-size: 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+
+    /* Form styling to match Corona */
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+
+    .col-form-label {
+        color: #8c92a4;
+        font-size: 0.875rem;
+        font-weight: 400;
+        margin-bottom: 0.5rem;
+    }
+
+    .form-control {
+        background-color: #2a3038;
+        border: 1px solid #3d4351;
+        color: #c8cdd8;
+        height: 45px;
+        padding: 0.875rem 1rem;
+        font-size: 0.95rem;
+        border-radius: 4px;
+        transition: all 0.2s ease;
+    }
+
+        .form-control:focus {
+            background-color: #2a3038;
+            border-color: #5ba3f5;
+            color: #c8cdd8;
+            box-shadow: 0 0 0 0.15rem rgba(91, 163, 245, 0.15);
+        }
+
+        .form-control::placeholder {
+            color: #6c757d;
+        }
+
+    /* Select dropdown styling */
+    select.form-control {
+        appearance: none;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%238c92a4' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 1rem center;
+        background-size: 12px;
+        padding-right: 2.5rem;
+        cursor: pointer;
+    }
+
+        select.form-control:focus {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%235ba3f5' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+        }
+
+        select.form-control option {
+            background-color: #2a3038;
+            color: #c8cdd8;
+        }
+
+    /* Date input styling */
+    input[type="date"].form-control {
+        color-scheme: dark;
+    }
+
+    input[type="date"]::-webkit-calendar-picker-indicator {
+        filter: invert(0.7);
+        cursor: pointer;
+    }
+
+    /* Number input styling */
+    input[type="number"]::-webkit-inner-spin-button,
+    input[type="number"]::-webkit-outer-spin-button {
+        opacity: 0.6;
+    }
+
+    /* Validation messages */
+    .text-danger {
+        color: #fe7c96;
+        font-size: 0.8rem;
+        margin-top: 0.25rem;
+        display: block;
+    }
+
+    /* Button styling */
+    .btn {
+        padding: 0.75rem 2rem;
+        font-size: 0.875rem;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        border-radius: 4px;
+        transition: all 0.2s ease;
+        border: none;
+    }
+
+    .btn-primary {
+        background: linear-gradient(90deg, #5ba3f5 0%, #4a93e5 100%);
+        color: #ffffff;
+    }
+
+        .btn-primary:hover {
+            background: linear-gradient(90deg, #4a93e5 0%, #3983d5 100%);
+            box-shadow: 0 4px 12px rgba(91, 163, 245, 0.3);
+            transform: translateY(-1px);
+            color: #ffffff;
+        }
+
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+
+    .btn-light {
+        background-color: #3d4351;
+        color: #c8cdd8;
+    }
+
+        .btn-light:hover {
+            background-color: #4a4f5d;
+            color: #c8cdd8;
+        }
+
+    .mr-2 {
+        margin-right: 0.5rem;
+    }
+
+    /* Responsive adjustments */
+    @@media (max-width: 768px) {
+        .card-body
+
+    {
+        padding: 1.5rem;
+    }
+
+    .btn {
+        width: 48%;
+        margin: 0.25rem 1%;
+    }
+
+    }
+
+    @@media (max-width: 576px) {
+        .btn
+
+    {
+        width: 100%;
+        margin: 0.5rem 0;
+    }
+
+    .mr-2 {
+        margin-right: 0;
+    }
+
+    }
+</style>
