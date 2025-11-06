@@ -6,8 +6,6 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using AdminTemplate.DTOs;
-using AdminTemplate.Models;
-using AdminTemplate.Repositories;
 
 namespace AdminTemplate.Services
 {
@@ -32,7 +30,10 @@ namespace AdminTemplate.Services
                 Email = dto.Email,
                 PhoneNumber = dto.PhoneNumber,
                 PasswordHash = HashPassword(dto.Password),
-                AuthToken = Guid.NewGuid().ToString()
+                AuthToken = Guid.NewGuid().ToString(),
+                // ✅ ADD THESE TWO LINES
+                Address = dto.Address,
+                Coordinates = dto.Coordinates
             };
 
             await _userRepository.AddAsync(user);
@@ -64,7 +65,10 @@ namespace AdminTemplate.Services
                 FullName = user.FullName,
                 Email = user.Email,
                 PhoneNumber = user.PhoneNumber,
-                AuthToken = user.AuthToken
+                AuthToken = user.AuthToken,
+                // ✅ ADD THESE TWO LINES
+                Address = user.Address,
+                Coordinates = user.Coordinates
             };
         }
 

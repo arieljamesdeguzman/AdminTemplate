@@ -3,8 +3,8 @@ using AdminTemplate.Models;
 using AdminTemplate.Repositories;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
-using AdminTemplate.Data;
-using AdminTemplate.Models;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace AdminTemplate.Repositories
 {
@@ -41,6 +41,14 @@ namespace AdminTemplate.Repositories
         {
             _context.Users.Update(user);
             await _context.SaveChangesAsync();
+        }
+
+        // ✅ NEW METHOD
+        public async Task<List<User>> GetAllUsersWithCoordinatesAsync()
+        {
+            return await _context.Users
+                .Where(u => u.Coordinates != null && u.Coordinates != "")
+                .ToListAsync();
         }
     }
 }

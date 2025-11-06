@@ -1,11 +1,12 @@
-﻿using AdminTemplate.Data;
+﻿using AdminTemplate.Configuration;
+using AdminTemplate.Data;
+using AdminTemplate.Filters;
 using AdminTemplate.Repositories;
 using AdminTemplate.Services;
-using AdminTemplate.Filters;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.EntityFrameworkCore;
 using Hangfire;
 using Hangfire.SqlServer;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +16,10 @@ builder.Services.AddControllersWithViews();
 // Database Context
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+// ✅ Register GoogleMapsSettings
+builder.Services.Configure<GoogleMapsSettings>(
+    builder.Configuration.GetSection("GoogleMaps"));
 
 // REPOSITORIES
 builder.Services.AddScoped<IUserRepository, UserRepository>();

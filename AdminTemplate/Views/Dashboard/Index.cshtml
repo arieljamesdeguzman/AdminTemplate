@@ -131,108 +131,31 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-8 grid-margin stretch-card">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="d-flex flex-row justify-content-between">
-                            <h4 class="card-title mb-1">Open Projects</h4>
-                            <p class="text-muted mb-1">Your data status</p>
-                        </div>
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="preview-list">
-                                    <div class="preview-item border-bottom">
-                                        <div class="preview-thumbnail">
-                                            <div class="preview-icon bg-primary">
-                                                <i class="mdi mdi-file-document"></i>
-                                            </div>
-                                        </div>
-                                        <div class="preview-item-content d-sm-flex flex-grow">
-                                            <div class="flex-grow">
-                                                <h6 class="preview-subject">Admin dashboard design</h6>
-                                                <p class="text-muted mb-0">Broadcast web app mockup</p>
-                                            </div>
-                                            <div class="me-auto text-sm-right pt-2 pt-sm-0">
-                                                <p class="text-muted">15 minutes ago</p>
-                                                <p class="text-muted mb-0">30 tasks, 5 issues </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="preview-item border-bottom">
-                                        <div class="preview-thumbnail">
-                                            <div class="preview-icon bg-success">
-                                                <i class="mdi mdi-cloud-download"></i>
-                                            </div>
-                                        </div>
-                                        <div class="preview-item-content d-sm-flex flex-grow">
-                                            <div class="flex-grow">
-                                                <h6 class="preview-subject">Wordpress Development</h6>
-                                                <p class="text-muted mb-0">Upload new design</p>
-                                            </div>
-                                            <div class="me-auto text-sm-right pt-2 pt-sm-0">
-                                                <p class="text-muted">1 hour ago</p>
-                                                <p class="text-muted mb-0">23 tasks, 5 issues </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="preview-item border-bottom">
-                                        <div class="preview-thumbnail">
-                                            <div class="preview-icon bg-info">
-                                                <i class="mdi mdi-clock"></i>
-                                            </div>
-                                        </div>
-                                        <div class="preview-item-content d-sm-flex flex-grow">
-                                            <div class="flex-grow">
-                                                <h6 class="preview-subject">Project meeting</h6>
-                                                <p class="text-muted mb-0">New project discussion</p>
-                                            </div>
-                                            <div class="me-auto text-sm-right pt-2 pt-sm-0">
-                                                <p class="text-muted">35 minutes ago</p>
-                                                <p class="text-muted mb-0">15 tasks, 2 issues</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="preview-item border-bottom">
-                                        <div class="preview-thumbnail">
-                                            <div class="preview-icon bg-danger">
-                                                <i class="mdi mdi-email-open"></i>
-                                            </div>
-                                        </div>
-                                        <div class="preview-item-content d-sm-flex flex-grow">
-                                            <div class="flex-grow">
-                                                <h6 class="preview-subject">Broadcast Mail</h6>
-                                                <p class="text-muted mb-0">Sent release details to team</p>
-                                            </div>
-                                            <div class="me-auto text-sm-right pt-2 pt-sm-0">
-                                                <p class="text-muted">55 minutes ago</p>
-                                                <p class="text-muted mb-0">35 tasks, 7 issues </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="preview-item">
-                                        <div class="preview-thumbnail">
-                                            <div class="preview-icon bg-warning">
-                                                <i class="mdi mdi-chart-pie"></i>
-                                            </div>
-                                        </div>
-                                        <div class="preview-item-content d-sm-flex flex-grow">
-                                            <div class="flex-grow">
-                                                <h6 class="preview-subject">UI Design</h6>
-                                                <p class="text-muted mb-0">New application planning</p>
-                                            </div>
-                                            <div class="me-auto text-sm-right pt-2 pt-sm-0">
-                                                <p class="text-muted">50 minutes ago</p>
-                                                <p class="text-muted mb-0">27 tasks, 4 issues </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+<div class="col-md-8 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <div class="d-flex flex-row justify-content-between">
+                <h4 class="card-title mb-1">Users Locations</h4>
+                <p class="text-muted mb-1"><span id="userCount">0</span> users registered</p>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <!-- ✅ Map Container - Dark Mode Optimized -->
+                    <div id="usersMap" style="height: 500px; width: 100%; border-radius: 8px; margin-top: 15px; border: 2px solid #2c2e33;"></div>
+                    
+                    <!-- ✅ Legend - Dark Mode Optimized -->
+                    <div style="margin-top: 15px; padding: 12px; background: #1e1e1e; border-radius: 8px; border: 1px solid #2c2e33;">
+                        <small style="color: #e0e0e0;"><strong>Legend:</strong></small>
+                        <div style="display: flex; gap: 15px; margin-top: 8px; flex-wrap: wrap;">
+                            <span style="font-size: 12px; color: #b0b0b0;">🔴 Click marker to view user details</span>
+                            <span style="font-size: 12px; color: #b0b0b0;">🗺️ Use controls to zoom and navigate</span>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
+</div>
         <div class="row">
             <div class="col-sm-4 grid-margin">
                 <div class="card">
@@ -658,7 +581,7 @@
                                 </div>
                             </div>
                             <div class="col-md-7">
-                                <div id="audience-map" class="vector-map"></div>
+                                    <iframe width="650" height="450" src="https://embed.windy.com/embed.html?type=map&location=coordinates&metricRain=default&metricTemp=°C&metricWind=default&zoom=5&overlay=wind&product=ecmwf&level=surface&lat=10.228&lon=120.63&message=true" frameborder="0"></iframe>
                             </div>
                         </div>
                     </div>
@@ -667,3 +590,118 @@
         </div>
     </div>
 </main>
+
+
+<script src="https://maps.googleapis.com/maps/api/js?key=@ViewBag.GoogleMapsApiKey"></script>
+
+
+<script>
+    let map;
+    let markers = [];
+    let infoWindows = [];
+
+    // ✅ Initialize map
+    async function initUsersMap() {
+        // Default center (Philippines - Manila)
+        const defaultCenter = { lat: 14.5995, lng: 120.9842 };
+
+        // Create map
+        map = new google.maps.Map(document.getElementById('usersMap'), {
+            center: defaultCenter,
+            zoom: 6,
+            mapTypeControl: true,
+            streetViewControl: true,
+            fullscreenControl: true
+        });
+
+        // Fetch users locations
+        try {
+            const response = await fetch('/Dashboard/GetUsersLocations');
+            const users = await response.json();
+
+            document.getElementById('userCount').textContent = users.length;
+
+            if (users.length === 0) {
+                // Show message if no users
+                const messageDiv = document.createElement('div');
+                messageDiv.style.cssText = 'position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);';
+                messageDiv.innerHTML = '<p style="margin: 0; color: #666;">No users with location data yet.</p>';
+                document.getElementById('usersMap').appendChild(messageDiv);
+                return;
+            }
+
+            // Create bounds to fit all markers
+            const bounds = new google.maps.LatLngBounds();
+
+            // Add markers for each user
+            users.forEach(user => {
+                const coords = user.coordinates.split(',');
+                const lat = parseFloat(coords[0]);
+                const lng = parseFloat(coords[1]);
+                const position = { lat: lat, lng: lng };
+
+                // Create marker
+                const marker = new google.maps.Marker({
+                    position: position,
+                    map: map,
+                    title: user.fullName,
+                    animation: google.maps.Animation.DROP,
+                    icon: {
+                        url: 'http://maps.google.com/mapfiles/ms/icons/red-dot.png'
+                    }
+                });
+
+                // Create info window
+                const infoWindow = new google.maps.InfoWindow({
+                    content: `
+                        <div style="padding: 10px; min-width: 200px;">
+                            <h6 style="margin: 0 0 10px 0; color: #333; font-weight: bold;">${user.fullName}</h6>
+                            <p style="margin: 5px 0; font-size: 13px; color: #666;">
+                                <strong>Email:</strong> ${user.email}
+                            </p>
+                            <p style="margin: 5px 0; font-size: 13px; color: #666;">
+                                <strong>Address:</strong> ${user.address || 'N/A'}
+                            </p>
+                            <p style="margin: 5px 0; font-size: 11px; color: #999;">
+                                <strong>Coordinates:</strong> ${user.coordinates}
+                            </p>
+                        </div>
+                    `
+                });
+
+                // Add click event to marker
+                marker.addListener('click', function() {
+                    // Close all other info windows
+                    infoWindows.forEach(iw => iw.close());
+                    // Open this info window
+                    infoWindow.open(map, marker);
+                });
+
+                markers.push(marker);
+                infoWindows.push(infoWindow);
+                bounds.extend(position);
+            });
+
+            // Fit map to show all markers
+            if (users.length > 0) {
+                map.fitBounds(bounds);
+
+                // Add some padding
+                google.maps.event.addListenerOnce(map, 'bounds_changed', function() {
+                    if (map.getZoom() > 15) {
+                        map.setZoom(15);
+                    }
+                });
+            }
+
+        } catch (error) {
+            console.error('Error loading users locations:', error);
+            alert('Failed to load user locations');
+        }
+    }
+
+    // Initialize map when page loads
+    window.addEventListener('load', function() {
+        initUsersMap();
+    });
+</script>

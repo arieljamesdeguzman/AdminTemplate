@@ -1,6 +1,6 @@
 ﻿using AdminTemplate.Models;
 using System.Threading.Tasks;
-using AdminTemplate.Models;
+using System.Collections.Generic;
 
 namespace AdminTemplate.Repositories
 {
@@ -11,5 +11,8 @@ namespace AdminTemplate.Repositories
         Task SaveChangesAsync();
         Task<User> GetUserByEmailAsync(string email);
         Task UpdateUserAsync(User user);
+
+        // ✅ ADD THIS METHOD
+        Task<List<User>> GetAllUsersWithCoordinatesAsync();
     }
 }
