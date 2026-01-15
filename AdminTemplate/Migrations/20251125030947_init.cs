@@ -53,6 +53,8 @@ namespace AdminTemplate.Migrations
                     PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     AuthToken = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     IsEmailVerified = table.Column<bool>(type: "bit", nullable: false),
+                    Address = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
+                    Coordinates = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
